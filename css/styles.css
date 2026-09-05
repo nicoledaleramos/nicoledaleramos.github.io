@@ -256,13 +256,18 @@ a:hover { color: var(--accent-hover); }
 
 /* ── 6. Hero ───────────────────────────────────────────────────── */
 .hero { padding-top: clamp(3rem, 7vw, 5.5rem); padding-bottom: var(--section-y); }
-/* Second column is sized so the IMAGE lands at 500px: the .portrait-frame
-   adds .6rem of padding on each side, hence the +1.2rem. Text takes the
-   rest. Below the 860px breakpoint this collapses to one column. */
+/* Second column is sized so the IMAGE lands at 500px wide: the
+   .portrait-frame adds .6rem of padding on each side, hence the +1.2rem.
+
+   align-items: stretch (not center) is what makes the photo end level with
+   the text. The grid row is as tall as the text column, and the photo fills
+   that height — so the two columns always finish together, whatever the
+   headline wraps to. A fixed pixel height cannot do this: it has no idea how
+   tall the text ended up at a given window width. */
 .hero-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, calc(500px + 1.2rem));
-  gap: clamp(2rem, 5vw, 4rem); align-items: center;
+  gap: clamp(2rem, 5vw, 4rem); align-items: stretch;
 }
 .hero-text h1 { margin-bottom: .55em; max-width: 16ch; }
 .hero-cta { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: 2rem; }
@@ -274,30 +279,38 @@ a:hover { color: var(--accent-hover); }
 }
 .hero-meta svg { width: 1rem; height: 1rem; flex: none; }
 
+/* flex chain: the grid stretches .hero-portrait to the row height, which
+   stretches the frame, which stretches the image. min-height: 0 lets the
+   chain shrink below the image's intrinsic size instead of pushing the row
+   taller — without it flex items refuse to shrink and the photo wins. */
+.hero-portrait { display: flex; min-height: 0; }
+
 .portrait-frame {
   position: relative; border-radius: var(--radius);
   padding: .6rem; background: var(--surface);
   border: 1px solid var(--border); box-shadow: var(--shadow-lg);
   rotate: 1.5deg;
+  flex: 1; display: flex; min-height: 0;
 }
 .portrait-frame::after {
   content: ''; position: absolute; inset: -1.5rem -1.5rem auto auto;
   width: 7rem; height: 7rem; border-radius: 50%;
   background: var(--accent-soft); z-index: -1;
 }
-/* Frame is 500×650. The source photo is 1288×1447 — a wider shape — so
-   object-fit: cover scales it to the frame's height and trims the sides
-   (~39px off each edge at display size) rather than squashing the face.
+/* Width is fixed by the grid column (500px); height comes from the text
+   column via the flex chain above, so no aspect-ratio is declared here.
 
-   object-position is centred, not biased: because the frame is TALLER in
-   proportion than the photo, the full height already fits, so a vertical
-   offset would do nothing. Only the horizontal half of this value is live.
-   If you swap in a wider photo, the vertical value becomes meaningful again. */
+   object-fit: cover means the photo always fills that box and is cropped to
+   fit, never stretched — so your face keeps its real proportions no matter
+   what height the text happens to be. object-position: 50% 30% keeps the
+   crop centred on the face rather than the middle of the frame, which
+   matters when the box is short and wide. */
 .portrait-img {
-  display: block; width: 100%; aspect-ratio: 500 / 650;
-  object-fit: cover; object-position: center;
+  display: block; width: 100%; height: 100%;
+  object-fit: cover; object-position: 50% 30%;
   border-radius: calc(var(--radius) - 5px);
   background: var(--bg-alt);
+  min-height: 0;
 }
 
 .portrait-placeholder {
@@ -333,7 +346,12 @@ a:hover { color: var(--accent-hover); }
 
 @media (max-width: 860px) {
   .hero-grid { grid-template-columns: 1fr; }
-  .hero-portrait { max-width: 340px; }
+  /* Single column: the photo sits on its own row with no text beside it to
+     take a height from, so height:100% would resolve against nothing and
+     collapse. Give it an explicit shape back. */
+  .hero-portrait { max-width: 340px; display: block; }
+  .portrait-frame { display: block; }
+  .portrait-img { height: auto; aspect-ratio: 4 / 5; }
   .stats { grid-template-columns: repeat(2, 1fr); gap: 1.75rem 1rem; }
 }
 
