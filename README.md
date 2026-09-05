@@ -1,10 +1,10 @@
-# nicogallardoramos-glitch.github.io
+# nicoledaleramos.github.io
 
 A single-page professional portfolio. Plain HTML, CSS and JavaScript — no
 build step, no dependencies, no `npm install`. Open `index.html` in a browser
 and it works.
 
-**Live at:** <https://nicogallardoramos-glitch.github.io/>
+**Live at:** <https://nicoledaleramos.github.io/>
 
 Personal portfolio for **Nicole Dale Ramos** — executive assistant, project
 manager and automations specialist. Content is real, drawn from the EA/VA and
@@ -25,7 +25,8 @@ Automations résumés. Two things are still placeholders and are listed under
 ├── css/styles.css          ← all styling; design tokens at the top
 ├── js/main.js              ← theme toggle, nav, scroll reveal, form
 ├── assets/
-│   └── favicon.svg         ← browser tab icon (edit initials + colour)
+│   ├── favicon.svg         ← browser tab icon (edit initials + colour)
+│   └── portrait.jpg        ← hero photo, cropped square by CSS
 ├── .github/workflows/
 │   └── deploy.yml          ← auto-deploys to GitHub Pages on push
 ├── .nojekyll               ← required; stops Pages from mangling files
@@ -62,10 +63,8 @@ Two placeholders remain. Both are marked `EDIT ME` in `index.html`.
 
 Optional but worth doing:
 
-- `assets/portrait.jpg` — a square photo, 800×800 or larger. The hero shows a
-  lettered placeholder until you add one.
 - `assets/og-image.png` — 1200×630. Controls the preview card when the link is
-  shared on LinkedIn or in a message.
+  shared on LinkedIn or in a message. Without it, a shared link shows no image.
 
 ### Privacy decisions already made
 
@@ -117,13 +116,17 @@ Work through these in order. All of it is in `index.html` unless noted.
 | Colour scheme | `css/styles.css`, `--accent-h` at the very top |
 | Résumé content | `resume/ea-va.html`, `resume/automations.html` |
 
-**Photo.** Save a square image (800×800 or larger) as `assets/portrait.jpg`,
-then replace the `<div class="portrait-frame">…</div>` block with:
+**Photo.** `assets/portrait.jpg` is in place. To swap it, overwrite that file
+and update `width`/`height` on the `<img class="portrait-img">` in
+`index.html` to the new pixel dimensions — they only need to match the file's
+aspect ratio, which reserves the right space while the image loads and stops
+the page jumping.
 
-```html
-<img src="assets/portrait.jpg" alt="Nicole Dale Ramos" width="800" height="800"
-     style="border-radius:calc(var(--radius) - 5px); display:block">
-```
+The frame is square and the photo is not, so `.portrait-img` in
+`css/styles.css` crops with `object-fit: cover` rather than squashing.
+`object-position: 50% 22%` pulls the crop upward so the face sits centred; if
+you swap in a photo framed differently, that percentage is the dial to turn —
+lower it to show more of the top, raise it to show more of the bottom.
 
 **Keeping the résumés in sync.** The two files under `resume/` are standalone
 — they carry their own CSS and share nothing with the main site. Editing a job
@@ -187,7 +190,7 @@ and recruiters recognise them.
 
    **For `www.yourdomain.com`** (recommended — simpler and more resilient):
    ```
-   Type: CNAME   Name: www   Value: nicogallardoramos-glitch.github.io
+   Type: CNAME   Name: www   Value: nicoledaleramos.github.io
    ```
 
    **For the bare `yourdomain.com`**, four A records:
@@ -241,7 +244,7 @@ in VS Code — right-click `index.html` → "Open with Live Server".
 
 - [ ] Fill in or delete the LinkedIn link (`YOUR-LINKEDIN` in `index.html`)
 - [ ] Configure or remove the contact form (`YOUR_FORM_ID`)
-- [ ] Add `assets/portrait.jpg` — the hero shows a lettered placeholder without it
+- [x] ~~Add `assets/portrait.jpg`~~ — done
 - [ ] Add `assets/og-image.png` (1200×630) so shared links show a preview
 - [ ] Read the whole page once for typos and anything you would not say aloud
 - [ ] Check both résumé pages render and the "Save as PDF" button works

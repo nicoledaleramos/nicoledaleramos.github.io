@@ -281,6 +281,16 @@ a:hover { color: var(--accent-hover); }
   width: 7rem; height: 7rem; border-radius: 50%;
   background: var(--accent-soft); z-index: -1;
 }
+/* The source photo is portrait-shaped; the frame is square. object-fit
+   crops rather than squashes, and object-position biases the crop upward
+   so the face sits in the visual centre instead of being cut at the chin. */
+.portrait-img {
+  display: block; width: 100%; aspect-ratio: 1;
+  object-fit: cover; object-position: 50% 22%;
+  border-radius: calc(var(--radius) - 5px);
+  background: var(--bg-alt);
+}
+
 .portrait-placeholder {
   aspect-ratio: 1; display: grid; place-content: center; gap: .5rem;
   border-radius: calc(var(--radius) - 5px);

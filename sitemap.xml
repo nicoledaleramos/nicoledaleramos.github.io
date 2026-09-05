@@ -2,19 +2,19 @@
 <!-- EDIT ME - swap the domain when you attach a custom domain. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://nicogallardoramos-glitch.github.io/</loc>
+    <loc>https://nicoledaleramos.github.io/</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://nicogallardoramos-glitch.github.io/resume/ea-va.html</loc>
+    <loc>https://nicoledaleramos.github.io/resume/ea-va.html</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://nicogallardoramos-glitch.github.io/resume/automations.html</loc>
+    <loc>https://nicoledaleramos.github.io/resume/automations.html</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
