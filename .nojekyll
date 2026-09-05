@@ -1,0 +1,3 @@
+Presence of this file tells GitHub Pages to skip Jekyll processing and serve
+the files exactly as committed. Without it, anything in a folder starting with
+an underscore is silently dropped. Keep it, even though it looks empty-ish.

@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# EDIT ME — replace with your real domain once it's live.
+Sitemap: https://nicogallardoramos-glitch.github.io/sitemap.xml

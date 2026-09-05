@@ -1,0 +1,17 @@
+# OS clutter
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editors
+.vscode/
+.idea/
+*.swp
+
+# Local tooling (none required, but harmless to ignore)
+node_modules/
+.cache/
+
+# Never commit these
+.env
+.env.local
