@@ -122,11 +122,24 @@ and update `width`/`height` on the `<img class="portrait-img">` in
 aspect ratio, which reserves the right space while the image loads and stops
 the page jumping.
 
-The frame is square and the photo is not, so `.portrait-img` in
-`css/styles.css` crops with `object-fit: cover` rather than squashing.
-`object-position: 50% 22%` pulls the crop upward so the face sits centred; if
-you swap in a photo framed differently, that percentage is the dial to turn —
-lower it to show more of the top, raise it to show more of the bottom.
+**Photo frame size.** The hero photo displays at **500×650**. Two rules
+control that, both in `css/styles.css`:
+
+- `.portrait-img` sets `aspect-ratio: 500 / 650` — the shape.
+- `.hero-grid` sets the second column to `calc(500px + 1.2rem)` — the width.
+  The `+1.2rem` accounts for `.portrait-frame`'s padding, so the image itself
+  lands at 500px, not the frame around it.
+
+Change both together or the photo will not be the size you expect.
+
+The frame is taller in proportion than the source photo (1288×1447), so
+`object-fit: cover` trims roughly 39px from each side at display size rather
+than squashing the face. `object-position` is `center`: because the full
+height already fits, a vertical offset would do nothing here. Swap in a wider
+photo and the vertical half becomes meaningful again.
+
+A `@media (max-width: 1100px)` rule switches the photo column to 42% — without
+it, a 900px-wide window squeezes the headline column to about 246px.
 
 **Keeping the résumés in sync.** The two files under `resume/` are standalone
 — they carry their own CSS and share nothing with the main site. Editing a job

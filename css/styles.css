@@ -256,8 +256,12 @@ a:hover { color: var(--accent-hover); }
 
 /* ── 6. Hero ───────────────────────────────────────────────────── */
 .hero { padding-top: clamp(3rem, 7vw, 5.5rem); padding-bottom: var(--section-y); }
+/* Second column is sized so the IMAGE lands at 500px: the .portrait-frame
+   adds .6rem of padding on each side, hence the +1.2rem. Text takes the
+   rest. Below the 860px breakpoint this collapses to one column. */
 .hero-grid {
-  display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, calc(500px + 1.2rem));
   gap: clamp(2rem, 5vw, 4rem); align-items: center;
 }
 .hero-text h1 { margin-bottom: .55em; max-width: 16ch; }
@@ -281,12 +285,17 @@ a:hover { color: var(--accent-hover); }
   width: 7rem; height: 7rem; border-radius: 50%;
   background: var(--accent-soft); z-index: -1;
 }
-/* The source photo is portrait-shaped; the frame is square. object-fit
-   crops rather than squashes, and object-position biases the crop upward
-   so the face sits in the visual centre instead of being cut at the chin. */
+/* Frame is 500×650. The source photo is 1288×1447 — a wider shape — so
+   object-fit: cover scales it to the frame's height and trims the sides
+   (~39px off each edge at display size) rather than squashing the face.
+
+   object-position is centred, not biased: because the frame is TALLER in
+   proportion than the photo, the full height already fits, so a vertical
+   offset would do nothing. Only the horizontal half of this value is live.
+   If you swap in a wider photo, the vertical value becomes meaningful again. */
 .portrait-img {
-  display: block; width: 100%; aspect-ratio: 1;
-  object-fit: cover; object-position: 50% 22%;
+  display: block; width: 100%; aspect-ratio: 500 / 650;
+  object-fit: cover; object-position: center;
   border-radius: calc(var(--radius) - 5px);
   background: var(--bg-alt);
 }
@@ -314,6 +323,13 @@ a:hover { color: var(--accent-hover); }
   color: var(--text); line-height: 1;
 }
 .stats dd { margin: .45rem 0 0; color: var(--text-soft); font-size: .85rem; }
+
+/* Between the breakpoint and full width there isn't room for a fixed 500px
+   photo AND a readable headline, so the photo goes proportional here. Without
+   this the text column collapses to ~246px on a 900px-wide window. */
+@media (max-width: 1100px) {
+  .hero-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 42%); }
+}
 
 @media (max-width: 860px) {
   .hero-grid { grid-template-columns: 1fr; }
