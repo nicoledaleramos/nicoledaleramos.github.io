@@ -157,7 +157,7 @@
         })
         .catch(function () {
           status.className = 'form-status err';
-          status.textContent = 'Something went wrong. Email me directly at hello@example.com.';
+          status.textContent = 'Something went wrong. Email me directly at nicogallardoramos@gmail.com.';
         })
         .finally(function () {
           if (button) { button.disabled = false; button.textContent = original; }

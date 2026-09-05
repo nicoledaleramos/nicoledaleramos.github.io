@@ -6,9 +6,10 @@ and it works.
 
 **Live at:** <https://nicogallardoramos-glitch.github.io/>
 
-> ⚠️ **Content is currently synthetic** — a fictional operations manager
-> called "Alex Rivera". Replace it before sharing the URL with anyone.
-> Every editable spot is marked with an `EDIT ME` comment.
+Personal portfolio for **Nicole Dale Ramos** — executive assistant, project
+manager and automations specialist. Content is real, drawn from the EA/VA and
+Automations résumés. Two things are still placeholders and are listed under
+[Still to do](#still-to-do).
 
 ---
 
@@ -18,6 +19,9 @@ and it works.
 .
 ├── index.html              ← all page content lives here
 ├── 404.html                ← shown for bad URLs (self-contained, inlined CSS)
+├── resume/
+│   ├── ea-va.html          ← Executive Assistant / VA résumé, as a live page
+│   └── automations.html    ← Automations / PM résumé, as a live page
 ├── css/styles.css          ← all styling; design tokens at the top
 ├── js/main.js              ← theme toggle, nav, scroll reveal, form
 ├── assets/
@@ -37,11 +41,44 @@ and it works.
 ## Setup status
 
 - [x] Git installed (2.55.0.windows.5)
-- [x] Author identity configured — Nico Gallardo Ramos <nicogallardoramos@gmail.com>
-- [x] Repo initialized on `main`, all files committed
-- [ ] Pushed to GitHub
-- [ ] Pages enabled (**Settings → Pages → Source → "GitHub Actions"**)
-- [ ] Real content swapped in
+- [x] Author identity configured
+- [x] Repo initialized on `main`
+- [x] Pushed to GitHub
+- [x] Pages enabled — Source set to "GitHub Actions"
+- [x] First deploy succeeded; site live
+- [x] Real content in place
+
+<a id="still-to-do"></a>
+### Still to do
+
+Two placeholders remain. Both are marked `EDIT ME` in `index.html`.
+
+1. **LinkedIn URL** — `YOUR-LINKEDIN` in the contact section. For EA/VA
+   applications this is usually the second thing a recruiter clicks, so it is
+   worth filling in. Delete the whole `<li>` if you would rather not link one.
+2. **Contact form endpoint** — `YOUR_FORM_ID`. See
+   [The contact form](#the-contact-form). Until it is set, the form shows a
+   "not configured" message instead of silently discarding messages.
+
+Optional but worth doing:
+
+- `assets/portrait.jpg` — a square photo, 800×800 or larger. The hero shows a
+  lettered placeholder until you add one.
+- `assets/og-image.png` — 1200×630. Controls the preview card when the link is
+  shared on LinkedIn or in a message.
+
+### Privacy decisions already made
+
+- The **full street address** from the source résumés is **deliberately
+  omitted from every page here** — this repo and the site are public and get
+  scraped. City and province only. Keep the full address in the copy you send
+  directly to an employer.
+- Your **phone number is published** in the contact section and on both résumé
+  pages. That was your call, and it is easy to reverse: delete the `<li>` in
+  `index.html` marked with the phone comment and redeploy.
+- **No testimonials section.** Both résumés say "references available on
+  request" and no real quotes were supplied. Inventing praise on a job-seeking
+  site is not worth the risk; the section was removed rather than filled.
 
 ---
 
@@ -69,27 +106,34 @@ Work through these in order. All of it is in `index.html` unless noted.
 
 | What | Where |
 |---|---|
-| Title, description, social preview | `<head>` — the `EDIT ME` block |
+| Title, description, social preview | `<head>` of `index.html` |
 | Name and initials | `.brand`, and `assets/favicon.svg` |
 | Headline, intro, stats | `<section class="hero">` |
 | About text | `<section id="about">` |
-| Jobs and education | `<section id="experience">` — copy an `<li>` to add one |
-| Projects | `<section id="work">` — copy an `<article class="card">` |
+| Jobs | `<section id="experience">` — copy an `<li>` to add one |
+| Highlighted work | `<section id="work">` — copy an `<article class="card">` |
 | Skills and certifications | `<section id="skills">` |
-| Quotes | `<section id="testimonials">` — delete the section if you have none |
-| Email, LinkedIn, location | `<section id="contact">` |
+| Email, phone, LinkedIn, location | `<section id="contact">` |
 | Colour scheme | `css/styles.css`, `--accent-h` at the very top |
+| Résumé content | `resume/ea-va.html`, `resume/automations.html` |
 
 **Photo.** Save a square image (800×800 or larger) as `assets/portrait.jpg`,
-then replace the `<div class="portrait-placeholder">…</div>` block with:
+then replace the `<div class="portrait-frame">…</div>` block with:
 
 ```html
-<img src="assets/portrait.jpg" alt="Nico Gallardo Ramos" width="800" height="800"
+<img src="assets/portrait.jpg" alt="Nicole Dale Ramos" width="800" height="800"
      style="border-radius:calc(var(--radius) - 5px); display:block">
 ```
 
-**Résumé.** Drop a PDF at `assets/resume.pdf` — the About section already
-links to it. Remove that link if you would rather not publish one.
+**Keeping the résumés in sync.** The two files under `resume/` are standalone
+— they carry their own CSS and share nothing with the main site. Editing a job
+description in `index.html` does **not** update them, or vice versa. When a
+role changes, edit all three, or the site will contradict itself in front of
+someone reading both.
+
+Each résumé page has a screen-only toolbar — a back link, a link to the other
+version, and a "Save as PDF" button that opens the browser print dialog. It is
+hidden on print, so the printed sheet is exactly the résumé.
 
 **Colour.** `--accent-h: 172` is a hue on the 0–360 wheel. Try `212` for
 blue, `268` for purple, `24` for a warm orange. Light and dark themes both
@@ -112,8 +156,7 @@ is pre-wired to **Formspree**'s free tier (50 submissions/month):
    ```html
    <form action="https://formspree.io/f/xyzabcde" method="POST">
    ```
-4. Also update the fallback email in `js/main.js` (search for
-   `hello@example.com`).
+The fallback email shown if the form errors is already set in `js/main.js`.
 
 Until you do this the form shows a "not configured yet" message rather than
 pretending to send. Alternatives: **Web3Forms** (unlimited, free),
@@ -196,12 +239,13 @@ in VS Code — right-click `index.html` → "Open with Live Server".
 
 ## Before you share the URL
 
-- [ ] Replace every `EDIT ME` block — no "Alex Rivera" anywhere
-- [ ] Searching the project for `example` returns only things you meant to keep
-- [ ] Add `assets/portrait.jpg` and `assets/resume.pdf`
-- [ ] Configure or remove the contact form
+- [ ] Fill in or delete the LinkedIn link (`YOUR-LINKEDIN` in `index.html`)
+- [ ] Configure or remove the contact form (`YOUR_FORM_ID`)
+- [ ] Add `assets/portrait.jpg` — the hero shows a lettered placeholder without it
 - [ ] Add `assets/og-image.png` (1200×630) so shared links show a preview
+- [ ] Read the whole page once for typos and anything you would not say aloud
+- [ ] Check both résumé pages render and the "Save as PDF" button works
 - [ ] Test on your phone
 - [ ] Toggle dark mode and check both themes
-- [ ] Print the page (Ctrl+P) — it is styled to come out as a clean résumé
+- [ ] Print the main page (Ctrl+P) — it is styled to come out as a clean résumé
 - [ ] Run it through <https://pagespeed.web.dev>
